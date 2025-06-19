@@ -38,7 +38,7 @@ def extract_transcript_details(youtube_video_url):
             transcript = transcript_list.find_transcript(['en'])
             transcript_text = transcript.fetch()
             transcript_full = " ".join([i.text for i in transcript_text])
-            print("📋 YouTube transcript preview:", transcript_full[:200])
+            print("YouTube transcript preview:", transcript_full[:200])
             return transcript_full, None
         except (TranscriptsDisabled, NoTranscriptFound):
             print("Transcript not found via API. Using Whisper fallback...")
@@ -53,16 +53,16 @@ def extract_transcript_details(youtube_video_url):
         os.remove(audio_path)
 
         whisper_transcript = result.get("text", "").strip()
-        print("📝 Whisper transcript preview:", whisper_transcript[:200])
+        print("Whisper transcript preview:", whisper_transcript[:200])
 
         if not whisper_transcript:
-            print("⚠️ Whisper returned empty text.")
+            print("Whisper returned empty text.")
             return None, "Whisper failed to transcribe audio."
 
         return whisper_transcript, None
 
     except Exception as e:
-        print("❌ Transcript extraction failed:", e)
+        print("Transcript extraction failed:", e)
         return None, f"Unexpected error: {e}"
 
 # Generate summary using Gemini
@@ -70,7 +70,7 @@ def generate_gemini_content(transcript_text, prompt, max_chars=12000):
     print("🔍 ENTERED generate_gemini_content()")
     try:
         model = genai.GenerativeModel("models/gemini-1.5-pro-latest")
-        print("✅ Gemini model loaded")
+        print("Gemini model loaded")
 
         # Clean and check
         import re
@@ -82,18 +82,18 @@ def generate_gemini_content(transcript_text, prompt, max_chars=12000):
         combined_input = cleaned_prompt + cleaned_transcript
 
         if len(combined_input) > max_chars:
-            st.warning("⚠️ Transcript is long — only the beginning will be summarized.")
+            st.warning("Transcript is long — only the beginning will be summarized.")
             combined_input = combined_input[:max_chars]
 
-        print("📏 Input length:", len(combined_input))
-        print("🧪 Input preview:", combined_input[:200])
+        print("Input length:", len(combined_input))
+        print("Input preview:", combined_input[:200])
 
         response = model.generate_content(combined_input)
-        print("✅ Gemini response received")
+        print("Gemini response received")
         return response.text
 
     except Exception as e:
-        print("❌ Exception in generate_gemini_content():", e)
+        print("Exception in generate_gemini_content():", e)
         st.error(f"Gemini Error: {e}")
         return None
 
