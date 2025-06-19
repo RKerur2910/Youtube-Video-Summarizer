@@ -67,7 +67,7 @@ def extract_transcript_details(youtube_video_url):
 
 # Generate summary using Gemini
 def generate_gemini_content(transcript_text, prompt, max_chars=12000):
-    print("🔍 ENTERED generate_gemini_content()")
+    print("ENTERED generate_gemini_content()")
     try:
         model = genai.GenerativeModel("models/gemini-1.5-pro-latest")
         print("Gemini model loaded")
@@ -100,22 +100,22 @@ def generate_gemini_content(transcript_text, prompt, max_chars=12000):
 
 # Streamlit UI
 st.set_page_config(page_title="YouTube Notes Generator", layout="centered")
-st.title("🎬 YouTube Transcript to Detailed Notes Converter")
+st.title("YouTube Transcript to Detailed Notes Converter")
 
-youtube_link = st.text_input("📥 Enter YouTube Video Link:")
+youtube_link = st.text_input("Enter YouTube Video Link:")
 
 if youtube_link:
     video_id = extract_video_id(youtube_link)
     if video_id:
         st.image(f"http://img.youtube.com/vi/{video_id}/0.jpg", use_column_width=True)
 
-if st.button("📝 Get Detailed Notes"):
+if st.button("Get Detailed Notes"):
     with st.spinner("Fetching transcript and summarizing..."):
         transcript_text, error = extract_transcript_details(youtube_link)
         if error:
             st.error(error)
         elif transcript_text and transcript_text.strip():
-            print("📥 Transcript ready for Gemini:", transcript_text[:200])
+            print("Transcript ready for Gemini:", transcript_text[:200])
             try:
                 summary = generate_gemini_content(transcript_text, prompt)
                 if summary:
