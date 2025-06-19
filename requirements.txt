@@ -1,5 +1,7 @@
-youtube_transcript_api
 streamlit
-google-generativeai
 python-dotenv
-pathlib
+google-generativeai
+openai-whisper
+pytube
+youtube-transcript-api
+ffmpeg-python
