@@ -32,8 +32,3 @@ The goal of this project is to automate the process of understanding long-form v
 - Pytube
 - dotenv
 - ffmpeg
-
-## Notes
-Only public YouTube videos are supported.
-
-Whisper transcription is performed locally and may require a system-level ffmpeg installation.
